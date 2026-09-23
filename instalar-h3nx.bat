@@ -27,7 +27,7 @@ set "TMP=%TEMP%\h3nx_install_%RANDOM%"
 mkdir "%TMP%"
 mkdir "%TMP%\extracted"
 
-echo Descargando el cliente recomendado (~75MB)...
+echo Descargando el cliente recomendado (~73MB)...
 powershell -NoProfile -ExecutionPolicy Bypass -Command "try { Invoke-WebRequest -Uri '%PACK_URL%' -OutFile '%TMP%\pack.zip' -UseBasicParsing } catch { exit 1 }"
 if errorlevel 1 (
     echo ERROR al descargar el paquete. Revisa tu conexion a internet.
@@ -56,23 +56,52 @@ xcopy "%TMP%\extracted\config\*" "%DEST%\config\" /E /Y /I >nul
 xcopy "%TMP%\extracted\shaderpacks\*" "%DEST%\shaderpacks\" /E /Y /I >nul
 if exist "%TMP%\extracted\resourcepacks" xcopy "%TMP%\extracted\resourcepacks\*" "%DEST%\resourcepacks\" /E /Y /I >nul
 
-rmdir /s /q "%TMP%"
-
 set "HAS_FABRIC="
 for /d %%D in ("%DEST%\versions\fabric-loader-*-1.21.11") do set "HAS_FABRIC=1"
+
+if not defined HAS_FABRIC (
+    echo.
+    echo No se encontro Fabric Loader 1.21.11 -- instalandolo automaticamente...
+    if not exist "%DEST%\launcher_profiles.json" (
+        echo {"profiles":{},"settings":{},"version":3} > "%DEST%\launcher_profiles.json"
+    )
+    where java >nul 2>nul
+    if errorlevel 1 (
+        echo No se encontro "java" instalado -- no puedo instalar Fabric automaticamente.
+    ) else (
+        set "FABRIC_INSTALLER_URL="
+        set "FABRIC_LOADER_VER="
+        for /f "delims=" %%U in ('powershell -NoProfile -Command "(Invoke-RestMethod 'https://meta.fabricmc.net/v2/versions/installer')[0].url" 2^>nul') do set "FABRIC_INSTALLER_URL=%%U"
+        for /f "delims=" %%L in ('powershell -NoProfile -Command "(Invoke-RestMethod 'https://meta.fabricmc.net/v2/versions/loader')[0].version" 2^>nul') do set "FABRIC_LOADER_VER=%%L"
+        if defined FABRIC_INSTALLER_URL if defined FABRIC_LOADER_VER (
+            powershell -NoProfile -ExecutionPolicy Bypass -Command "Invoke-WebRequest -Uri '!FABRIC_INSTALLER_URL!' -OutFile '%TMP%\fabric-installer.jar' -UseBasicParsing" >nul 2>nul
+            java -jar "%TMP%\fabric-installer.jar" client -mcversion 1.21.11 -loader !FABRIC_LOADER_VER! -dir "%DEST%" >nul 2>nul
+            if errorlevel 1 (
+                echo El instalador de Fabric fallo.
+            ) else (
+                echo Fabric Loader 1.21.11 instalado correctamente.
+                set "HAS_FABRIC=1"
+            )
+        ) else (
+            echo No pude consultar la version mas reciente de Fabric ^(¿sin internet?^).
+        )
+    )
+)
+
+rmdir /s /q "%TMP%"
 
 echo.
 if not defined HAS_FABRIC (
     echo === Copiado ok, pero FALTA UN PASO IMPORTANTE ===
-    echo No se encontro un perfil de Fabric Loader para 1.21.11 instalado.
-    echo Los mods NO van a hacer nada hasta que instales Fabric para esa version:
+    echo No se pudo instalar Fabric Loader 1.21.11 automaticamente.
+    echo Los mods NO van a hacer nada hasta que lo instales vos:
     echo   1. Entra a https://fabricmc.net/use/installer/
     echo   2. Descarga el instalador, elegi Minecraft version 1.21.11
     echo   3. Instalalo, abri el launcher de Minecraft y elegi el nuevo perfil
     echo      "fabric-loader-1.21.11" antes de jugar.
 ) else (
     echo === Listo ===
-    echo Ya tenes Fabric 1.21.11 instalado. Elegi el perfil "fabric-loader-1.21.11"
+    echo Fabric 1.21.11 esta instalado. Elegi el perfil "fabric-loader-1.21.11"
     echo en el launcher de Minecraft y jugá.
 )
 echo Adentro del juego: Mod Menu -^> FancyMenu, para asignar las imagenes

@@ -29,7 +29,7 @@ fi
 TMP=$(mktemp -d)
 trap 'rm -rf "$TMP"' EXIT
 
-echo "Descargando el cliente recomendado (~75MB)..."
+echo "Descargando el cliente recomendado (~73MB)..."
 if command -v curl >/dev/null 2>&1; then
     curl -fL --progress-bar -o "$TMP/pack.zip" "$PACK_URL"
 elif command -v wget >/dev/null 2>&1; then
@@ -62,18 +62,48 @@ cp -rf "$TMP/extracted/shaderpacks/." "$DEST/shaderpacks/"
 # pero el juego sigue arrancando vanilla porque falta ese paso previo.
 HAS_FABRIC=$(find "$DEST/versions" -maxdepth 1 -iname "fabric-loader-*-1.21.11" 2>/dev/null | head -n1 || true)
 
+if [[ -z "$HAS_FABRIC" ]]; then
+    echo
+    echo "No se encontro Fabric Loader 1.21.11 -- instalandolo automaticamente..."
+    # El instalador de Fabric necesita que exista launcher_profiles.json (lo
+    # crea el launcher oficial la primera vez que lo abris). Si el script
+    # corre ANTES de haber abierto el launcher ni una vez, ese archivo no
+    # existe todavia y el instalador falla en el ultimo paso -- se crea un
+    # stub minimo valido para evitarlo.
+    if [[ ! -f "$DEST/launcher_profiles.json" ]]; then
+        echo '{"profiles":{},"settings":{},"version":3}' > "$DEST/launcher_profiles.json"
+    fi
+    if command -v java >/dev/null 2>&1 && command -v python3 >/dev/null 2>&1; then
+        INSTALLER_URL=$(curl -fsSL "https://meta.fabricmc.net/v2/versions/installer" 2>/dev/null | python3 -c "import json,sys; print(json.load(sys.stdin)[0]['url'])" 2>/dev/null || true)
+        LOADER_VER=$(curl -fsSL "https://meta.fabricmc.net/v2/versions/loader" 2>/dev/null | python3 -c "import json,sys; print(json.load(sys.stdin)[0]['version'])" 2>/dev/null || true)
+        if [[ -n "$INSTALLER_URL" && -n "$LOADER_VER" ]]; then
+            curl -fsSL -o "$TMP/fabric-installer.jar" "$INSTALLER_URL"
+            if java -jar "$TMP/fabric-installer.jar" client -mcversion 1.21.11 -loader "$LOADER_VER" -dir "$DEST" >/dev/null 2>&1; then
+                echo "Fabric Loader 1.21.11 instalado correctamente."
+                HAS_FABRIC=1
+            else
+                echo "El instalador de Fabric fallo."
+            fi
+        else
+            echo "No pude consultar la version mas reciente de Fabric (¿sin internet?)."
+        fi
+    else
+        echo "Necesitas 'java' y 'python3' instalados para que lo haga automaticamente."
+    fi
+fi
+
 echo
 if [[ -z "$HAS_FABRIC" ]]; then
     echo "=== Copiado ✔ pero FALTA UN PASO IMPORTANTE ==="
-    echo "No encontre un perfil de Fabric Loader para 1.21.11 instalado."
-    echo "Los mods NO van a hacer nada hasta que instales Fabric para esa version:"
+    echo "No se pudo instalar Fabric Loader 1.21.11 automaticamente."
+    echo "Los mods NO van a hacer nada hasta que lo instales vos:"
     echo "  1. Entra a https://fabricmc.net/use/installer/"
     echo "  2. Descarga el instalador, elegi Minecraft version 1.21.11"
     echo "  3. Instalalo, abri el launcher de Minecraft y elegi el nuevo perfil"
     echo "     'fabric-loader-1.21.11' antes de jugar."
 else
     echo "=== Listo ✔ ==="
-    echo "Ya tenes Fabric 1.21.11 instalado. Elegi el perfil 'fabric-loader-1.21.11'"
+    echo "Fabric 1.21.11 esta instalado. Elegi el perfil 'fabric-loader-1.21.11'"
     echo "en el launcher de Minecraft y jugá."
 fi
 echo "Adentro del juego: Mod Menu -> FancyMenu, para asignar las imagenes"

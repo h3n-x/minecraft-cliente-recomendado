@@ -31,8 +31,7 @@ INSTALACION MANUAL
 MODS INCLUIDOS (35)
 ----------------------
 Rendimiento: Sodium, Lithium, FerriteCore, Entity Culling, ImmediatelyFast
-Visuales: Iris (+ shader Complementary Unbound preconfigurado), EMF, ETF,
-          Chat Heads, Chat Animation, Visuality, Subtle Effects,
+Visuales: EMF, ETF, Chat Heads, Chat Animation, Visuality, Subtle Effects,
           Immersive UI, Fadeless, Cinematic Zoom
 Utilidad: Bobby, JourneyMap, Jade, Hold My Items, Inventory Particles,
           Chat Signing Hider, GUI Scale Splitter, Perception
@@ -42,7 +41,7 @@ Opcional/debatible: Gamma Utils (ver nota abajo)
 Librerias (necesarias para que los de arriba funcionen, no hacen nada
 por si solas): Fabric API, Architectury API, Cloth Config, YACL,
 Fzzy Config, OctoLib, Fabric Language Kotlin, Text Placeholder API,
-Mod Menu
+Mod Menu, Konkrete, Melody, MossyLib
 
 Texture packs incluidos: Enchant Icons, Fresh Animations, Low On Fire
 (ademas del resource pack del propio servidor: Better Leaves + Torches
@@ -57,6 +56,13 @@ NOTA - mods que NO se incluyeron y por que
   original de DIOSESMC pero NO existian realmente en los archivos del
   modpack que analizamos (quedaron huerfanos de una version vieja) --
   no hay nada que copiar.
+- Iris + shader Complementary Unbound: Iris dejo de sacar builds para la
+  linea 1.21.x (ya solo desarrolla para los drops 26.x de Mojang), y la
+  ultima Iris que existe para 1.21.11 (1.10.7) es incompatible con
+  cualquier Sodium reciente (Sodium mismo lo declara explicitamente).
+  No hay forma de tener shaders funcionando en este momento sin romper
+  el resto del pack. Se puede volver a sumar el dia que Iris saque una
+  build compatible.
 
 NOTA SOBRE GAMMA UTILS (vision nocturna)
 -------------------------------------------
