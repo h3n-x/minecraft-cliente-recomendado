@@ -1,0 +1,81 @@
+========================================
+ CLIENTE RECOMENDADO - SERVIDOR H3N-X
+========================================
+
+Este paquete es 100% OPCIONAL y va del lado de TU computadora, no del
+servidor. Mejora rendimiento y visuales; ningun mod de esta lista da
+ventajas de combate ni rompe las reglas del servidor.
+
+REQUISITOS
+-----------
+- Minecraft Java Edition 1.21.11
+- Fabric Loader instalado (https://fabricmc.net/use/installer/)
+  Elegi Minecraft version 1.21.11 al instalar Fabric.
+
+INSTALACION
+------------
+1. Abri la carpeta .minecraft de tu PC:
+     Windows: %appdata%\.minecraft
+     Linux:   ~/.minecraft
+     Mac:     ~/Library/Application Support/minecraft
+2. Copia el contenido de este ZIP (las carpetas mods/, config/,
+   shaderpacks/) DENTRO de esa carpeta .minecraft, combinando/
+   sobrescribiendo si ya existen.
+3. Abri el launcher de Minecraft, elegi el perfil "fabric-loader-1.21.11"
+   y jugá.
+
+MODS INCLUIDOS Y QUE HACEN
+----------------------------
+- Fabric API        -> libreria base, requerida por el resto
+- Sodium             -> motor de renderizado optimizado (mas FPS)
+- Lithium            -> optimiza la logica del juego sin cambiar nada visual
+- Iris                -> permite usar shaders (viene con Complementary
+                         Unbound ya preconfigurado y con sombras recortadas
+                         para no golpear tanto el rendimiento)
+- FerriteCore         -> reduce el uso de RAM de tu cliente
+- Entity Culling      -> no renderiza entidades tapadas por bloques (FPS)
+- Bobby               -> muestra chunks ya visitados mas alla de lo que el
+                         servidor transmite en vivo, hasta 32 de distancia
+                         (el servidor transmite 10 en vivo por limite de
+                         RAM del hardware; Bobby rellena el resto con lo
+                         que ya viste antes)
+- JourneyMap          -> minimapa + mapa completo
+- Jade                 -> muestra info del bloque/entidad al apuntarle
+- Simple Voice Chat    -> chat de voz por proximidad (el servidor ya lo
+                         tiene instalado del otro lado)
+- Gamma Utils          -> permite subir el brillo/ver en la oscuridad con
+                         una tecla (OPCIONAL, apagado por defecto -- vos
+                         decidis si lo usas o no, coherente con
+                         "Regla #1: No hay reglas")
+- FancyMenu            -> permite personalizar las pantallas de menu con
+                         las imagenes de la marca H3N-X (ver mas abajo)
+
+CONFIGURAR LAS IMAGENES DE FANCYMENU
+--------------------------------------
+Las 4 imagenes ya estan incluidas en:
+  config/fancymenu/assets/h3nx_title_screen.png    (menu principal)
+  config/fancymenu/assets/h3nx_loading_screen.png  (pantalla de carga)
+  config/fancymenu/assets/h3nx_pause_screen.png    (menu de pausa)
+  config/fancymenu/assets/h3nx_logo.png            (logo)
+
+FancyMenu no las aplica solo -- hay que asignarlas una vez, a mano, desde
+el editor visual del propio mod:
+  1. Entra al juego con el modpack instalado.
+  2. En el menu principal, abri el "Mod Menu" (icono de bloques en la
+     esquina) y busca la config de FancyMenu, o el boton/icono de edicion
+     que FancyMenu agrega en cada pantalla (suele ser un lapiz en una
+     esquina).
+  3. Usa el editor de FancyMenu para agregar cada imagen como fondo de
+     su pantalla correspondiente (Title Screen / Loading Screen / Pause
+     Screen). El editor es visual (arrastrar y soltar), no hace falta
+     tocar archivos.
+  4. Guardá el layout desde el propio editor.
+
+CONECTARSE AL SERVIDOR
+------------------------
+- El servidor esta en modo "cracked" (no requiere cuenta premium), pero
+  usa whitelist: pedile a un admin que te agregue con tu nombre exacto.
+- La primera vez que entres vas a tener que registrarte con:
+    /register <contraseña> <contraseña>
+  y en las siguientes conexiones:
+    /login <contraseña>
