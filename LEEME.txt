@@ -4,7 +4,8 @@
 
 Este paquete es 100% OPCIONAL y va del lado de TU computadora, no del
 servidor. Mejora rendimiento y visuales; ningun mod de esta lista da
-ventajas de combate ni rompe las reglas del servidor.
+ventajas de combate ni rompe las reglas del servidor (salvo Gamma Utils,
+ver nota abajo).
 
 REQUISITOS
 -----------
@@ -12,43 +13,57 @@ REQUISITOS
 - Fabric Loader instalado (https://fabricmc.net/use/installer/)
   Elegi Minecraft version 1.21.11 al instalar Fabric.
 
-INSTALACION
-------------
+INSTALACION AUTOMATICA (recomendado)
+--------------------------------------
+Linux/Mac: corre instalar-h3nx.sh
+Windows:   doble clic en instalar-h3nx.bat
+
+INSTALACION MANUAL
+--------------------
 1. Abri la carpeta .minecraft de tu PC:
      Windows: %appdata%\.minecraft
      Linux:   ~/.minecraft
      Mac:     ~/Library/Application Support/minecraft
 2. Copia el contenido de este ZIP (las carpetas mods/, config/,
-   shaderpacks/) DENTRO de esa carpeta .minecraft, combinando/
-   sobrescribiendo si ya existen.
-3. Abri el launcher de Minecraft, elegi el perfil "fabric-loader-1.21.11"
-   y jugá.
+   shaderpacks/, resourcepacks/) DENTRO de esa carpeta .minecraft.
+3. Abri el launcher, elegi el perfil "fabric-loader-1.21.11" y jugá.
 
-MODS INCLUIDOS Y QUE HACEN
-----------------------------
-- Fabric API        -> libreria base, requerida por el resto
-- Sodium             -> motor de renderizado optimizado (mas FPS)
-- Lithium            -> optimiza la logica del juego sin cambiar nada visual
-- Iris                -> permite usar shaders (viene con Complementary
-                         Unbound ya preconfigurado y con sombras recortadas
-                         para no golpear tanto el rendimiento)
-- FerriteCore         -> reduce el uso de RAM de tu cliente
-- Entity Culling      -> no renderiza entidades tapadas por bloques (FPS)
-- Bobby               -> muestra chunks ya visitados mas alla de lo que el
-                         servidor transmite en vivo, hasta 32 de distancia
-                         (el servidor transmite 10 en vivo por limite de
-                         RAM del hardware; Bobby rellena el resto con lo
-                         que ya viste antes)
-- JourneyMap          -> minimapa + mapa completo
-- Jade                 -> muestra info del bloque/entidad al apuntarle
-- Simple Voice Chat    -> chat de voz por proximidad (el servidor ya lo
-                         tiene instalado del otro lado)
-- Gamma Utils          -> permite subir el brillo/ver en la oscuridad con
-                         una tecla (OPCIONAL, apagado por defecto -- vos
-                         decidis si lo usas o no, coherente con
-                         "Regla #1: No hay reglas")
-- FancyMenu            -> permite personalizar las pantallas de menu con
-                         las imagenes de la marca H3N-X (ver mas abajo)
+MODS INCLUIDOS (35)
+----------------------
+Rendimiento: Sodium, Lithium, FerriteCore, Entity Culling, ImmediatelyFast
+Visuales: Iris (+ shader Complementary Unbound preconfigurado), EMF, ETF,
+          Chat Heads, Chat Animation, Visuality, Subtle Effects,
+          Immersive UI, Fadeless, Cinematic Zoom
+Utilidad: Bobby, JourneyMap, Jade, Hold My Items, Inventory Particles,
+          Chat Signing Hider, GUI Scale Splitter, Perception
+Voz/Social: Simple Voice Chat (el servidor ya lo tiene instalado)
+Branding: FancyMenu (con las 4 imagenes de H3N-X ya incluidas)
+Opcional/debatible: Gamma Utils (ver nota abajo)
+Librerias (necesarias para que los de arriba funcionen, no hacen nada
+por si solas): Fabric API, Architectury API, Cloth Config, YACL,
+Fzzy Config, OctoLib, Fabric Language Kotlin, Text Placeholder API,
+Mod Menu
+
+Texture packs incluidos: Enchant Icons, Fresh Animations, Low On Fire
+(ademas del resource pack del propio servidor: Better Leaves + Torches
+Reimagined, que el servidor te lo manda solo al conectarte)
+
+NOTA - mods que NO se incluyeron y por que
+---------------------------------------------
+- FirItemZoom: su unico build publicado es para Minecraft 1.21.8, el
+  autor todavia no lo actualizo a 1.21.11 -- incluirlo hubiera roto la
+  carga de mods. Si en el futuro sacan una build nueva, se puede sumar.
+- ToggleNametags y "Font++": estaban mencionados en la descripcion
+  original de DIOSESMC pero NO existian realmente en los archivos del
+  modpack que analizamos (quedaron huerfanos de una version vieja) --
+  no hay nada que copiar.
+
+NOTA SOBRE GAMMA UTILS (vision nocturna)
+-------------------------------------------
+Viene APAGADO por defecto. Se activa con una tecla configurable (andá a
+Opciones -> Controles -> Gamma Utils para asignarla). Es lo unico de este
+pack que se podria considerar una ventaja injusta en survival -- lo dejamos
+disponible pero es decision tuya si lo usas.
 
 CONFIGURAR LAS IMAGENES DE FANCYMENU
 --------------------------------------
@@ -61,10 +76,9 @@ Las 4 imagenes ya estan incluidas en:
 FancyMenu no las aplica solo -- hay que asignarlas una vez, a mano, desde
 el editor visual del propio mod:
   1. Entra al juego con el modpack instalado.
-  2. En el menu principal, abri el "Mod Menu" (icono de bloques en la
-     esquina) y busca la config de FancyMenu, o el boton/icono de edicion
-     que FancyMenu agrega en cada pantalla (suele ser un lapiz en una
-     esquina).
+  2. En el menu principal, abri "Mods" (boton que agrega Mod Menu) y
+     busca la config de FancyMenu, o el icono de edicion que FancyMenu
+     agrega en cada pantalla (suele ser un lapiz en una esquina).
   3. Usa el editor de FancyMenu para agregar cada imagen como fondo de
      su pantalla correspondiente (Title Screen / Loading Screen / Pause
      Screen). El editor es visual (arrastrar y soltar), no hace falta
