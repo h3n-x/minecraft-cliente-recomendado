@@ -50,11 +50,12 @@ else
     exit 1
 fi
 
-echo "Copiando mods, config y shaderpacks a $DEST ..."
-mkdir -p "$DEST/mods" "$DEST/config" "$DEST/shaderpacks"
+echo "Copiando mods, config, shaderpacks y resourcepacks a $DEST ..."
+mkdir -p "$DEST/mods" "$DEST/config" "$DEST/shaderpacks" "$DEST/resourcepacks"
 cp -rf "$TMP/extracted/mods/." "$DEST/mods/"
 cp -rf "$TMP/extracted/config/." "$DEST/config/"
 cp -rf "$TMP/extracted/shaderpacks/." "$DEST/shaderpacks/"
+[[ -d "$TMP/extracted/resourcepacks" ]] && cp -rf "$TMP/extracted/resourcepacks/." "$DEST/resourcepacks/"
 
 echo
 echo "=== Listo ✔ ==="

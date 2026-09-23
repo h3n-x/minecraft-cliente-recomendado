@@ -45,14 +45,16 @@ if errorlevel 1 (
     exit /b 1
 )
 
-echo Copiando mods, config y shaderpacks a %DEST% ...
+echo Copiando mods, config, shaderpacks y resourcepacks a %DEST% ...
 if not exist "%DEST%\mods" mkdir "%DEST%\mods"
 if not exist "%DEST%\config" mkdir "%DEST%\config"
 if not exist "%DEST%\shaderpacks" mkdir "%DEST%\shaderpacks"
+if not exist "%DEST%\resourcepacks" mkdir "%DEST%\resourcepacks"
 
 xcopy "%TMP%\extracted\mods\*" "%DEST%\mods\" /E /Y /I >nul
 xcopy "%TMP%\extracted\config\*" "%DEST%\config\" /E /Y /I >nul
 xcopy "%TMP%\extracted\shaderpacks\*" "%DEST%\shaderpacks\" /E /Y /I >nul
+if exist "%TMP%\extracted\resourcepacks" xcopy "%TMP%\extracted\resourcepacks\*" "%DEST%\resourcepacks\" /E /Y /I >nul
 
 rmdir /s /q "%TMP%"
 
