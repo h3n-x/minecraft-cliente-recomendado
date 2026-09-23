@@ -28,7 +28,7 @@ INSTALACION MANUAL
    shaderpacks/, resourcepacks/) DENTRO de esa carpeta .minecraft.
 3. Abri el launcher, elegi el perfil "fabric-loader-1.21.11" y jugá.
 
-MODS INCLUIDOS (35)
+MODS INCLUIDOS (38)
 ----------------------
 Rendimiento: Sodium, Lithium, FerriteCore, Entity Culling, ImmediatelyFast
 Visuales: EMF, ETF, Chat Heads, Chat Animation, Visuality, Subtle Effects,
@@ -36,7 +36,10 @@ Visuales: EMF, ETF, Chat Heads, Chat Animation, Visuality, Subtle Effects,
 Utilidad: Bobby, JourneyMap, Jade, Hold My Items, Inventory Particles,
           Chat Signing Hider, GUI Scale Splitter, Perception
 Voz/Social: Simple Voice Chat (el servidor ya lo tiene instalado)
-Branding: FancyMenu (con las 4 imagenes de H3N-X ya incluidas)
+Branding: FancyMenu + Drippy Loading Screen (con todo el layout de H3N-X
+          ya armado y guardado -- panorama animado en el titulo, logo,
+          splash text propio, fondos de pausa y de carga. No hay que
+          configurar nada, ya viene listo para jugar)
 Opcional/debatible: Gamma Utils (ver nota abajo)
 Librerias (necesarias para que los de arriba funcionen, no hacen nada
 por si solas): Fabric API, Architectury API, Cloth Config, YACL,
@@ -71,25 +74,18 @@ Opciones -> Controles -> Gamma Utils para asignarla). Es lo unico de este
 pack que se podria considerar una ventaja injusta en survival -- lo dejamos
 disponible pero es decision tuya si lo usas.
 
-CONFIGURAR LAS IMAGENES DE FANCYMENU
---------------------------------------
-Las 4 imagenes ya estan incluidas en:
-  config/fancymenu/assets/h3nx_title_screen.png    (menu principal)
-  config/fancymenu/assets/h3nx_loading_screen.png  (pantalla de carga)
-  config/fancymenu/assets/h3nx_pause_screen.png    (menu de pausa)
-  config/fancymenu/assets/h3nx_logo.png            (logo)
+BRANDING DE FANCYMENU (ya viene armado, no toques nada)
+-----------------------------------------------------------
+El layout de FancyMenu ya esta configurado y guardado dentro del pack
+(config/fancymenu/customization/) -- panorama animado + logo + splash
+text propios en el titulo, fondo custom en pausa, y fondo custom en las
+pantallas de carga/conexion. Al entrar al juego ya se ve todo aplicado,
+sin pasos manuales.
 
-FancyMenu no las aplica solo -- hay que asignarlas una vez, a mano, desde
-el editor visual del propio mod:
-  1. Entra al juego con el modpack instalado.
-  2. En el menu principal, abri "Mods" (boton que agrega Mod Menu) y
-     busca la config de FancyMenu, o el icono de edicion que FancyMenu
-     agrega en cada pantalla (suele ser un lapiz en una esquina).
-  3. Usa el editor de FancyMenu para agregar cada imagen como fondo de
-     su pantalla correspondiente (Title Screen / Loading Screen / Pause
-     Screen). El editor es visual (arrastrar y soltar), no hace falta
-     tocar archivos.
-  4. Guardá el layout desde el propio editor.
+El pack tambien viene en "modo modpack" (la barra de edicion de
+FancyMenu esta oculta) para que nadie la toque por accidente. Si sos
+admin y necesitas editar algo, entra a
+config/fancymenu/options.txt y poné modpack_mode en 'false'.
 
 CONECTARSE AL SERVIDOR
 ------------------------
@@ -99,3 +95,14 @@ CONECTARSE AL SERVIDOR
     /register <contraseña> <contraseña>
   y en las siguientes conexiones:
     /login <contraseña>
+
+AVISOS DE COMPATIBILIDAD
+----------------------------
+- Prism Launcher: FancyMenu tiene incompatibilidades reportadas (no
+  siempre, pero pasa) con Prism especificamente. Si usas Prism y algo
+  del branding se ve raro, probá con el launcher oficial de Minecraft
+  antes de reportarlo como bug del pack.
+- Si jugas con un launcher no oficial (TLauncher y similares, comunes
+  en cuentas no premium), FancyMenu puede mostrar una advertencia de
+  "instalacion modificada" -- es una deteccion del propio FancyMenu
+  contra ese tipo de launchers, no significa que el pack este roto.
