@@ -28,11 +28,18 @@ INSTALACION MANUAL
    shaderpacks/, resourcepacks/) DENTRO de esa carpeta .minecraft.
 3. Abri el launcher, elegi el perfil "fabric-loader-1.21.11" y jugá.
 
-MODS INCLUIDOS (38)
+MODS INCLUIDOS (61)
 ----------------------
-Rendimiento: Sodium, Lithium, FerriteCore, Entity Culling, ImmediatelyFast
+Rendimiento: Sodium, Lithium, FerriteCore, Entity Culling, ImmediatelyFast,
+             ScalableLux, Kle's Render Layer Optimizer, Entity View Distance,
+             Too Many Entities, Block Entity Render Distance, Ixeris,
+             ThreatenGL, BadOptimizations, Reflex AntiLag
 Visuales: EMF, ETF, Chat Heads, Chat Animation, Visuality, Subtle Effects,
-          Immersive UI, Fadeless, Cinematic Zoom
+          Immersive UI, Fadeless, Cinematic Zoom, Wavey Capes,
+          Fancy Entity Renderer, Sodium Extra, Reese's Sodium Options,
+          Sodium Extra Information, Shulker Box Tooltip, Fast Item Frames,
+          Smart Particles, Borderless Fullscreen, Map In Slot,
+          Perspective Nametag
 Utilidad: Bobby, JourneyMap, Jade, Hold My Items, Inventory Particles,
           Chat Signing Hider, GUI Scale Splitter, Perception
 Voz/Social: Simple Voice Chat (el servidor ya lo tiene instalado)
@@ -44,7 +51,13 @@ Opcional/debatible: Gamma Utils (ver nota abajo)
 Librerias (necesarias para que los de arriba funcionen, no hacen nada
 por si solas): Fabric API, Architectury API, Cloth Config, YACL,
 Fzzy Config, OctoLib, Fabric Language Kotlin, Text Placeholder API,
-Mod Menu, Konkrete, Melody, MossyLib
+Mod Menu, Konkrete, Melody, MossyLib, Anvian's Lib, Puzzles Lib,
+Forge Config API Port (si, el nombre menciona Forge, pero esta build es
+para Fabric -- es una libreria de configuracion multi-loader)
+
+Todos los mods nuevos fueron chequeados uno por uno contra los que ya
+teniamos (declaraciones "breaks" de cada fabric.mod.json) para confirmar
+que las versiones no chocan entre si -- sin conflictos detectados.
 
 Texture packs incluidos: Enchant Icons, Fresh Animations, Low On Fire
 (ademas del resource pack del propio servidor: Better Leaves + Torches
