@@ -56,6 +56,8 @@ cp -rf "$TMP/extracted/mods/." "$DEST/mods/"
 cp -rf "$TMP/extracted/config/." "$DEST/config/"
 cp -rf "$TMP/extracted/shaderpacks/." "$DEST/shaderpacks/"
 [[ -d "$TMP/extracted/resourcepacks" ]] && cp -rf "$TMP/extracted/resourcepacks/." "$DEST/resourcepacks/"
+# journeymap guarda su config en <game-directory>/journeymap/, no en config/
+[[ -d "$TMP/extracted/journeymap" ]] && { mkdir -p "$DEST/journeymap"; cp -rf "$TMP/extracted/journeymap/." "$DEST/journeymap/"; }
 
 # Los mods no hacen NADA si no existe el perfil de Fabric Loader para
 # 1.21.11 -- este chequeo evita el caso real donde el script "termina bien"

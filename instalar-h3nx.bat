@@ -55,6 +55,10 @@ xcopy "%TMP%\extracted\mods\*" "%DEST%\mods\" /E /Y /I >nul
 xcopy "%TMP%\extracted\config\*" "%DEST%\config\" /E /Y /I >nul
 xcopy "%TMP%\extracted\shaderpacks\*" "%DEST%\shaderpacks\" /E /Y /I >nul
 if exist "%TMP%\extracted\resourcepacks" xcopy "%TMP%\extracted\resourcepacks\*" "%DEST%\resourcepacks\" /E /Y /I >nul
+if exist "%TMP%\extracted\journeymap" (
+    if not exist "%DEST%\journeymap" mkdir "%DEST%\journeymap"
+    xcopy "%TMP%\extracted\journeymap\*" "%DEST%\journeymap\" /E /Y /I >nul
+)
 
 set "HAS_FABRIC="
 for /d %%D in ("%DEST%\versions\fabric-loader-*-1.21.11") do set "HAS_FABRIC=1"
