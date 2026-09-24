@@ -1,4 +1,7 @@
 @echo off
+rem UTF-8, para que "contraseña" y compania se vean bien en la consola
+rem (sin esto, cmd usa el codepage viejo del sistema y sale mojibake).
+chcp 65001 >nul
 setlocal enabledelayedexpansion
 
 set "FORGE_VERSION=1.20.1-47.4.10"
