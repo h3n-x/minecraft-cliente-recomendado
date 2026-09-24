@@ -28,7 +28,7 @@ INSTALACION MANUAL
    shaderpacks/, resourcepacks/) DENTRO de esa carpeta .minecraft.
 3. Abri el launcher, elegi el perfil "fabric-loader-1.21.11" y jugá.
 
-MODS INCLUIDOS (60)
+MODS INCLUIDOS (62) + SHADERS
 ----------------------
 Rendimiento: Sodium, Lithium, FerriteCore, Entity Culling, ImmediatelyFast,
              ScalableLux, Kle's Render Layer Optimizer, Entity View Distance,
@@ -63,6 +63,20 @@ Texture packs incluidos: Enchant Icons, Fresh Animations, Low On Fire
 (ademas del resource pack del propio servidor: Better Leaves + Torches
 Reimagined, que el servidor te lo manda solo al conectarte)
 
+SHADERS (Iris + Complementary Unbound)
+------------------------------------------
+Iris solo tiene una build compatible con Sodium para 1.21.11 (1.10.7),
+y esa build necesita una version especifica de Sodium (0.8.7) mas vieja
+que la que usariamos si no hubiera shaders (0.8.14). Por eso Sodium,
+Sodium Extra y Reese's Sodium Options van con versiones especificas
+elegidas para que todo funcione junto -- no las actualices sueltas o
+puede romperse Iris.
+
+Para activar los shaders: entra al juego, Options -> Video Settings ->
+Shader Packs, y elegi "ComplementaryUnbound_r5.9.3". Vienen apagados
+por defecto (no todas las compus aguantan shaders sin bajar mucho los
+FPS) -- es 100% opcional.
+
 NOTA - mods que NO se incluyeron y por que
 ---------------------------------------------
 - FirItemZoom: su unico build publicado es para Minecraft 1.21.8, el
@@ -72,13 +86,6 @@ NOTA - mods que NO se incluyeron y por que
   original de DIOSESMC pero NO existian realmente en los archivos del
   modpack que analizamos (quedaron huerfanos de una version vieja) --
   no hay nada que copiar.
-- Iris + shader Complementary Unbound: Iris dejo de sacar builds para la
-  linea 1.21.x (ya solo desarrolla para los drops 26.x de Mojang), y la
-  ultima Iris que existe para 1.21.11 (1.10.7) es incompatible con
-  cualquier Sodium reciente (Sodium mismo lo declara explicitamente).
-  No hay forma de tener shaders funcionando en este momento sin romper
-  el resto del pack. Se puede volver a sumar el dia que Iris saque una
-  build compatible.
 - Hold My Items: mostraba las manos en primera persona, pero en las
   unicas builds que existen para 1.21.11 (5.1 y 5.1.1) el brazo casi no
   se mueve al atacar o minar en primera persona (en tercera persona se
