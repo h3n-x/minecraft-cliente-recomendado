@@ -2,139 +2,106 @@
  CLIENTE RECOMENDADO - SERVIDOR H3N-X
 ========================================
 
-Este paquete es 100% OPCIONAL y va del lado de TU computadora, no del
-servidor. Mejora rendimiento y visuales; ningun mod de esta lista da
-ventajas de combate ni rompe las reglas del servidor (salvo Gamma Utils,
-ver nota abajo).
+IMPORTANTE: el servidor cambio de Fabric a ARCLIGHT (Forge 1.20.1). Este
+pack reemplaza por completo al cliente viejo de Fabric -- no son
+compatibles entre si, y ESTE SI hace falta para poder jugar (a diferencia
+del pack de Fabric, que era opcional/solo cosmetico, este trae los mods de
+contenido del server: sin ellos el juego rechaza la conexion).
 
 REQUISITOS
 -----------
-- Minecraft Java Edition 1.21.11
-- Fabric Loader instalado (https://fabricmc.net/use/installer/)
-  Elegi Minecraft version 1.21.11 al instalar Fabric.
+- Minecraft Java Edition 1.20.1
+- Forge 1.20.1-47.4.10 (el instalador lo pone solo si no lo tenes)
 
 INSTALACION AUTOMATICA (recomendado)
 --------------------------------------
-Linux/Mac: corre instalar-h3nx.sh
-Windows:   doble clic en instalar-h3nx.bat
+Linux: corre instalar-h3nx.sh
+Windows: doble clic en instalar-h3nx.bat
+
+El instalador:
+ 1. Revisa si tenes Forge 1.20.1-47.4.10. Si no lo tenes, lo descarga e
+    instala solo (headless, sin abrir ninguna ventana).
+ 2. Baja el pack (mods, resourcepacks, shaders, config) del ultimo Release
+    de este repo.
+ 3. Lo instala en una carpeta de juego PROPIA
+    (%appdata%\.minecraft-arclight-h3nx en Windows,
+    ~/.minecraft-arclight-h3nx en Linux) -- a proposito NO se mezcla con tu
+    .minecraft normal, para no chocar con Fabric ni con ninguna otra
+    instalacion que ya tengas.
+ 4. Crea el perfil "H3N-X (Arclight)" en el launcher oficial, listo para
+    jugar.
 
 INSTALACION MANUAL
 --------------------
-1. Abri la carpeta .minecraft de tu PC:
-     Windows: %appdata%\.minecraft
-     Linux:   ~/.minecraft
-     Mac:     ~/Library/Application Support/minecraft
-2. Copia el contenido de este ZIP (las carpetas mods/, config/,
-   shaderpacks/, resourcepacks/) DENTRO de esa carpeta .minecraft.
-3. Abri el launcher, elegi el perfil "fabric-loader-1.21.11" y jugá.
+1. Instala Forge 1.20.1-47.4.10 (https://files.minecraftforge.net/net/minecraftforge/forge/index_1.20.1.html)
+2. Baja el .zip del pack desde la seccion "Releases" de este repo
+3. Crea una carpeta de juego nueva y copia adentro el contenido del zip
+   (las carpetas mods/, resourcepacks/, shaderpacks/, config/)
+4. En el launcher oficial, crea una instalacion nueva: version
+   "1.20.1-forge-47.4.10", y en "Game Directory" apunta a esa carpeta
 
-MODS INCLUIDOS (62) + SHADERS
-----------------------
-Rendimiento: Sodium, Lithium, FerriteCore, Entity Culling, ImmediatelyFast,
-             ScalableLux, Kle's Render Layer Optimizer, Entity View Distance,
-             Too Many Entities, Block Entity Render Distance, Ixeris,
-             ThreatenGL, BadOptimizations, Reflex AntiLag
-Visuales: EMF, ETF, Chat Heads, Chat Animation, Visuality, Subtle Effects,
-          Immersive UI, Fadeless, Cinematic Zoom, Wavey Capes,
-          Fancy Entity Renderer, Sodium Extra, Reese's Sodium Options,
-          Sodium Extra Information, Shulker Box Tooltip, Fast Item Frames,
-          Smart Particles, Borderless Fullscreen, Map In Slot,
-          Perspective Nametag
-Utilidad: Bobby, JourneyMap, Jade, Inventory Particles,
-          Chat Signing Hider, GUI Scale Splitter, Perception
+MODS INCLUIDOS (~85) + RESOURCE PACKS + SHADERS
+--------------------------------------------------
+Tecnologia: Applied Energistics 2, Thermal (Core/Innovation), Industrial
+            Foregoing, Mekanism + Generators + Tools, ZeroCore2, CoFH Core
+Magia: Botania, Blood Magic, Ars Nouveau, Mystical Agriculture
+Exploracion/Aventura: Twilight Forest, Biomes O'Plenty, TerraBlender,
+                       YUNG's Better Dungeons/Ocean Monuments/Nether
+                       Fortresses, Dungeon Crawl, Dungeons Arise,
+                       Alex's Mobs, Serene Seasons
+Construccion/Decoracion: Macaw's (Windows/Doors/Bridges/Trapdoors/Fences),
+                          Chisels & Bits, Handcrafted
+Calidad de vida: Waystones, Sophisticated Storage/Core, Iron Chest,
+                  Carry On, Xaero's Minimap + World Map, Jade,
+                  Curios, GeckoLib, Patchouli
+Rendimiento/Visual: Embeddium, Oculus (shaders), Clumps, ModernFix,
+                     Entity Model Features + Entity Texture Features
+                     (Fresh Animations y compañia), FancyMenu + Drippy
+                     Loading Screen (branding H3N-X, panorama/logo/splash
+                     propios, ya armado, no hay que tocar nada)
 Voz/Social: Simple Voice Chat (el servidor ya lo tiene instalado)
-Branding: FancyMenu + Drippy Loading Screen (con todo el layout de H3N-X
-          ya armado y guardado -- panorama animado en el titulo, logo,
-          splash text propio, fondos de pausa y de carga. No hay que
-          configurar nada, ya viene listo para jugar)
-Opcional/debatible: Gamma Utils (ver nota abajo)
-Librerias (necesarias para que los de arriba funcionen, no hacen nada
-por si solas): Fabric API, Architectury API, Cloth Config, YACL,
-Fzzy Config, OctoLib, Fabric Language Kotlin, Text Placeholder API,
-Mod Menu, Konkrete, Melody, MossyLib, Anvian's Lib, Puzzles Lib,
-Forge Config API Port (si, el nombre menciona Forge, pero esta build es
-para Fabric -- es una libreria de configuracion multi-loader)
+Utilidad: RandomTP
 
-Todos los mods nuevos fueron chequeados uno por uno contra los que ya
-teniamos (declaraciones "breaks" de cada fabric.mod.json) para confirmar
-que las versiones no chocan entre si -- sin conflictos detectados.
+Resource packs incluidos (50): familia completa de Fresh Animations,
+mejoras vanilla-like (hojas, pasto, cielo), modelos 3D (cultivos, camas,
+rieles, escaleras, faroles, macetas, comida, baldes), GUIs (Immersive
+Interfaces, CozyUI+, Default Dark Mode), iconos de encantamiento/Xaero's,
+retexturas especificas (Re-Applied para AE2, Fresh Waystones).
 
-Texture packs incluidos: Enchant Icons, Fresh Animations, Low On Fire
-(ademas del resource pack del propio servidor: Better Leaves + Torches
-Reimagined, que el servidor te lo manda solo al conectarte)
+Shaders incluidos (elegi uno en Options -> Video Settings -> Shader
+Packs, vienen apagados por defecto):
+ - Nostalgia: para PCs de gama baja
+ - BSL: gama media, el mas balanceado
+ - Complementary Unbound: gama alta, el mas pesado
 
-SHADERS (Iris + Complementary Unbound)
-------------------------------------------
-Iris solo tiene una build compatible con Sodium para 1.21.11 (1.10.7),
-y esa build necesita una version especifica de Sodium (0.8.7) mas vieja
-que la que usariamos si no hubiera shaders (0.8.14). Por eso Sodium,
-Sodium Extra y Reese's Sodium Options van con versiones especificas
-elegidas para que todo funcione junto -- no las actualices sueltas o
-puede romperse Iris.
-
-Para activar los shaders: entra al juego, Options -> Video Settings ->
-Shader Packs, y elegi "ComplementaryUnbound_r5.9.3". Vienen apagados
-por defecto (no todas las compus aguantan shaders sin bajar mucho los
-FPS) -- es 100% opcional.
-
-NOTA - mods que NO se incluyeron y por que
----------------------------------------------
-- FirItemZoom: su unico build publicado es para Minecraft 1.21.8, el
-  autor todavia no lo actualizo a 1.21.11 -- incluirlo hubiera roto la
-  carga de mods. Si en el futuro sacan una build nueva, se puede sumar.
-- ToggleNametags y "Font++": estaban mencionados en la descripcion
-  original de DIOSESMC pero NO existian realmente en los archivos del
-  modpack que analizamos (quedaron huerfanos de una version vieja) --
-  no hay nada que copiar.
-- Hold My Items: mostraba las manos en primera persona, pero en las
-  unicas builds que existen para 1.21.11 (5.1 y 5.1.1) el brazo casi no
-  se mueve al atacar o minar en primera persona (en tercera persona se
-  ve bien). Se probo con sus dependencias completas (Respackopts +
-  LibJF) y con distintas combinaciones de mods, y el bug persiste con
-  el mod solo -- es un problema de esa build, no de conflicto con el
-  resto del pack. Se puede volver a sumar si sacan una build que lo
-  arregle.
-- Better Third Person: no tiene ninguna build publicada para 1.21.11.
-
-NOTA SOBRE GAMMA UTILS (vision nocturna)
--------------------------------------------
-Viene APAGADO por defecto. Se activa con una tecla configurable (andá a
-Opciones -> Controles -> Gamma Utils para asignarla). Es lo unico de este
-pack que se podria considerar una ventaja injusta en survival -- lo dejamos
-disponible pero es decision tuya si lo usas.
-
-BRANDING DE FANCYMENU (ya viene armado, no toques nada)
------------------------------------------------------------
-El layout de FancyMenu ya esta configurado y guardado dentro del pack
-(config/fancymenu/customization/) -- panorama animado + logo + splash
-text propios en el titulo, fondo custom en pausa, y fondo custom en las
-pantallas de carga/conexion. Al entrar al juego ya se ve todo aplicado,
-sin pasos manuales.
-
-El pack tambien viene en "modo modpack" (la barra de edicion de
-FancyMenu esta oculta) para que nadie la toque por accidente. Si sos
-admin y necesitas editar algo, entra a
-config/fancymenu/options.txt y poné modpack_mode en 'false'.
+Nota: Supplementaries y Moonlight se evaluaron pero NO se incluyeron -- bug
+de compatibilidad confirmado con Arclight (crash al arrancar el mundo,
+issue conocido y sin fix en el proyecto de Arclight). No es un descuido,
+es una decision a proposito.
 
 CONECTARSE AL SERVIDOR
 ------------------------
-- El servidor esta en modo "cracked" (no requiere cuenta premium), pero
-  usa whitelist: pedile a un admin que te agregue con tu nombre exacto.
-- La primera vez que entres vas a tener que registrarte con:
+- Direccion: laurel-wants.tun.ply.gg (sin puerto, Minecraft lo resuelve
+  solo)
+- Sin whitelist -- entra cualquiera.
+- Funciona con cuenta premium (Microsoft) Y con clientes no-premium por
+  igual (el server no verifica con Mojang), pero por eso mismo la
+  primera vez que entres tenes que registrarte vos mismo:
     /register <contraseña> <contraseña>
   y en las siguientes conexiones:
     /login <contraseña>
+  Tenes 2 minutos desde que entras para hacerlo o te desconecta -- si tu
+  PC tarda en cargar los 85 mods, no te preocupes, hay margen.
 
 AVISOS DE COMPATIBILIDAD
 ----------------------------
-- Prism Launcher: FancyMenu tiene incompatibilidades reportadas (no
-  siempre, pero pasa) con Prism especificamente. Si usas Prism y algo
-  del branding se ve raro, probá con el launcher oficial de Minecraft
-  antes de reportarlo como bug del pack.
-- Si jugas con un launcher no oficial (TLauncher y similares, comunes
-  en cuentas no premium), FancyMenu puede mostrar una advertencia de
-  "instalacion modificada" -- es una deteccion del propio FancyMenu
-  contra ese tipo de launchers, no significa que el pack este roto.
-  TLauncher en particular usa la MISMA carpeta .minecraft que el
-  launcher oficial (Windows: %appdata%\.minecraft, Linux: ~/.minecraft),
-  asi que el instalador automatico funciona igual sin pasos extra.
+- Este instalador NO toca tu .minecraft normal ni ninguna instalacion de
+  Fabric que ya tengas -- usa una carpeta de juego separada a proposito.
+- Si jugas con un launcher no oficial (TLauncher y similares, comunes en
+  cuentas no premium): el instalador crea el perfil en el
+  launcher_profiles.json de %appdata%\.minecraft / ~/.minecraft, que
+  TLauncher y similares suelen leer igual que el oficial. Si tu launcher
+  no lo detecta, agrega la instalacion manualmente apuntando a la carpeta
+  ...\.minecraft-arclight-h3nx con la version 1.20.1-forge-47.4.10.
+- Mac: no hay instalador automatico todavia, ver "INSTALACION MANUAL"
+  arriba.

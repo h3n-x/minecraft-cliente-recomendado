@@ -1,124 +1,105 @@
 #!/usr/bin/env bash
-# ==============================================================================
-# Instalador del cliente recomendado del servidor H3N-X (Linux/Mac)
-# Descarga el pack y copia mods/config/shaderpacks dentro de tu carpeta
-# .minecraft, sin tocar mods/configs que ya tengas de otros packs.
-# ==============================================================================
+# Instalador automatico del cliente H3N-X (Arclight + Forge 1.20.1) para Linux.
+# - Instala Forge 1.20.1-47.4.10 si no esta presente (instalador oficial en
+#   modo headless, sin abrir ninguna ventana).
+# - Descarga el pack de mods/resourcepacks/shaders/config desde el ultimo
+#   Release de este repo, en una carpeta de juego propia (no toca tu
+#   .minecraft normal ni tus otras instalaciones de Fabric).
+# - Crea/actualiza el perfil "H3N-X (Arclight)" en el launcher oficial.
+#
+# Uso: bash instalar-h3nx.sh
 set -euo pipefail
 
-PACK_URL="https://raw.githubusercontent.com/h3n-x/minecraft-cliente-recomendado/main/H3NX-Cliente-Recomendado.zip"
+FORGE_VERSION="1.20.1-47.4.10"
+MC_DIR="${HOME}/.minecraft"
+GAME_DIR="${HOME}/.minecraft-arclight-h3nx"
+REPO_API="https://api.github.com/repos/h3n-x/minecraft-cliente-recomendado/releases/latest"
+SERVER_ADDRESS="laurel-wants.tun.ply.gg"
 
-# Default segun sistema operativo -- en Mac el launcher oficial NO usa
-# ~/.minecraft (esa es la ruta de Linux), usa Application Support.
-if [[ -z "${1:-}" ]]; then
-    case "$(uname -s)" in
-        Darwin) DEST="$HOME/Library/Application Support/minecraft" ;;
-        *)      DEST="$HOME/.minecraft" ;;
-    esac
-else
-    DEST="$1"
-fi
+step() { echo -e "\033[36m==> $1\033[0m"; }
+ok()   { echo -e "\033[32m    $1\033[0m"; }
+warn() { echo -e "\033[33m    $1\033[0m"; }
 
-echo "=== Instalador del cliente recomendado H3N-X ==="
-echo "Destino: $DEST"
-echo "(si usas Prism Launcher/MultiMC, pasa la carpeta .minecraft de tu"
-echo " instancia como argumento: ./instalar-h3nx.sh /ruta/a/tu/instancia/.minecraft)"
-echo
-
-if [[ ! -d "$DEST" ]]; then
-    echo "AVISO: no existe '$DEST' todavia."
-    echo "¿Ya instalaste Fabric Loader para Minecraft 1.21.11 con el launcher oficial?"
-    read -r -p "Crear la carpeta de todos modos? [s/N] " resp
-    if [[ ! "$resp" =~ ^[sS]$ ]]; then
-        echo "Cancelado. Instala Fabric primero: https://fabricmc.net/use/installer/"
+# --- 1. Dependencias ---
+step "Verificando dependencias (java, curl, python3)..."
+for bin in java curl python3; do
+    if ! command -v "$bin" >/dev/null 2>&1; then
+        warn "Falta '$bin'."
+        if [[ "$bin" == "java" ]]; then
+            warn "Instala el launcher oficial de Minecraft (https://www.minecraft.net/download)"
+            warn "y abrilo al menos una vez -- trae su propio Java. O instala un JDK con tu"
+            warn "gestor de paquetes (ej: sudo pacman -S jdk-openjdk / sudo apt install openjdk-21-jdk)."
+        fi
         exit 1
     fi
-    mkdir -p "$DEST"
+done
+ok "OK"
+
+# --- 2. Forge ---
+if [[ -d "${MC_DIR}/versions/${FORGE_VERSION}" ]]; then
+    step "Forge ${FORGE_VERSION} ya esta instalado, se omite este paso."
+else
+    step "Forge ${FORGE_VERSION} no encontrado. Descargando e instalando automaticamente..."
+    installer="$(mktemp --suffix=.jar)"
+    curl -fSL -o "$installer" \
+        "https://maven.minecraftforge.net/net/minecraftforge/forge/${FORGE_VERSION}/forge-${FORGE_VERSION}-installer.jar"
+    ok "Instalador descargado, ejecutando instalacion headless (puede tardar un minuto)..."
+    java -jar "$installer" --installClient
+    rm -f "$installer"
+    ok "Forge ${FORGE_VERSION} instalado."
 fi
 
-TMP=$(mktemp -d)
-trap 'rm -rf "$TMP"' EXIT
-
-echo "Descargando el cliente recomendado (~73MB)..."
-if command -v curl >/dev/null 2>&1; then
-    curl -fL --progress-bar -o "$TMP/pack.zip" "$PACK_URL"
-elif command -v wget >/dev/null 2>&1; then
-    wget -q --show-progress -O "$TMP/pack.zip" "$PACK_URL"
-else
-    echo "ERROR: necesitas 'curl' o 'wget' instalado para continuar." >&2
+# --- 3. Descargar el pack ---
+step "Buscando el ultimo release del pack..."
+release_json="$(curl -fsSL "$REPO_API")"
+asset_url="$(echo "$release_json" | python3 -c "import json,sys; d=json.load(sys.stdin); a=[x for x in d['assets'] if x['name'].endswith('.zip')]; print(a[0]['browser_download_url'] if a else '')")"
+tag="$(echo "$release_json" | python3 -c "import json,sys; print(json.load(sys.stdin)['tag_name'])")"
+if [[ -z "$asset_url" ]]; then
+    warn "No se encontro ningun .zip en el ultimo release."
     exit 1
 fi
+ok "Version del pack: ${tag}"
 
-echo "Extrayendo..."
-mkdir -p "$TMP/extracted"
-if command -v unzip >/dev/null 2>&1; then
-    unzip -q -o "$TMP/pack.zip" -d "$TMP/extracted"
-elif command -v python3 >/dev/null 2>&1; then
-    python3 -c "import zipfile; zipfile.ZipFile('$TMP/pack.zip').extractall('$TMP/extracted')"
-else
-    echo "ERROR: necesitas 'unzip' o 'python3' instalado para continuar." >&2
+zip_path="$(mktemp --suffix=.zip)"
+step "Descargando pack..."
+curl -fSL -o "$zip_path" "$asset_url"
+ok "Descarga completa."
+
+# --- 4. Extraer en la carpeta de juego propia ---
+step "Instalando en ${GAME_DIR} ..."
+mkdir -p "$GAME_DIR"
+python3 -c "import zipfile; zipfile.ZipFile('${zip_path}').extractall('${GAME_DIR}')"
+rm -f "$zip_path"
+ok "Mods, resourcepacks, shaders y configuracion instalados."
+
+# --- 5. Registrar el perfil en el launcher oficial ---
+step "Registrando el perfil en el launcher..."
+profiles_path="${MC_DIR}/launcher_profiles.json"
+if [[ ! -f "$profiles_path" ]]; then
+    warn "No se encontro launcher_profiles.json. Abri el launcher oficial al menos una vez y volve a correr este script."
     exit 1
 fi
-
-echo "Copiando mods, config, shaderpacks y resourcepacks a $DEST ..."
-mkdir -p "$DEST/mods" "$DEST/config" "$DEST/shaderpacks" "$DEST/resourcepacks"
-cp -rf "$TMP/extracted/mods/." "$DEST/mods/"
-cp -rf "$TMP/extracted/config/." "$DEST/config/"
-cp -rf "$TMP/extracted/shaderpacks/." "$DEST/shaderpacks/"
-[[ -d "$TMP/extracted/resourcepacks" ]] && cp -rf "$TMP/extracted/resourcepacks/." "$DEST/resourcepacks/"
-# journeymap guarda su config en <game-directory>/journeymap/, no en config/
-[[ -d "$TMP/extracted/journeymap" ]] && { mkdir -p "$DEST/journeymap"; cp -rf "$TMP/extracted/journeymap/." "$DEST/journeymap/"; }
-
-# Los mods no hacen NADA si no existe el perfil de Fabric Loader para
-# 1.21.11 -- este chequeo evita el caso real donde el script "termina bien"
-# pero el juego sigue arrancando vanilla porque falta ese paso previo.
-HAS_FABRIC=$(find "$DEST/versions" -maxdepth 1 -iname "fabric-loader-*-1.21.11" 2>/dev/null | head -n1 || true)
-
-if [[ -z "$HAS_FABRIC" ]]; then
-    echo
-    echo "No se encontro Fabric Loader 1.21.11 -- instalandolo automaticamente..."
-    # El instalador de Fabric necesita que exista launcher_profiles.json (lo
-    # crea el launcher oficial la primera vez que lo abris). Si el script
-    # corre ANTES de haber abierto el launcher ni una vez, ese archivo no
-    # existe todavia y el instalador falla en el ultimo paso -- se crea un
-    # stub minimo valido para evitarlo.
-    if [[ ! -f "$DEST/launcher_profiles.json" ]]; then
-        echo '{"profiles":{},"settings":{},"version":3}' > "$DEST/launcher_profiles.json"
-    fi
-    if command -v java >/dev/null 2>&1 && command -v python3 >/dev/null 2>&1; then
-        INSTALLER_URL=$(curl -fsSL "https://meta.fabricmc.net/v2/versions/installer" 2>/dev/null | python3 -c "import json,sys; print(json.load(sys.stdin)[0]['url'])" 2>/dev/null || true)
-        LOADER_VER=$(curl -fsSL "https://meta.fabricmc.net/v2/versions/loader" 2>/dev/null | python3 -c "import json,sys; print(json.load(sys.stdin)[0]['version'])" 2>/dev/null || true)
-        if [[ -n "$INSTALLER_URL" && -n "$LOADER_VER" ]]; then
-            curl -fsSL -o "$TMP/fabric-installer.jar" "$INSTALLER_URL"
-            if java -jar "$TMP/fabric-installer.jar" client -mcversion 1.21.11 -loader "$LOADER_VER" -dir "$DEST" >/dev/null 2>&1; then
-                echo "Fabric Loader 1.21.11 instalado correctamente."
-                HAS_FABRIC=1
-            else
-                echo "El instalador de Fabric fallo."
-            fi
-        else
-            echo "No pude consultar la version mas reciente de Fabric (¿sin internet?)."
-        fi
-    else
-        echo "Necesitas 'java' y 'python3' instalados para que lo haga automaticamente."
-    fi
-fi
+python3 - "$profiles_path" "$FORGE_VERSION" "$GAME_DIR" <<'PYEOF'
+import json, sys
+path, version, game_dir = sys.argv[1], sys.argv[2], sys.argv[3]
+with open(path) as f:
+    data = json.load(f)
+data.setdefault("profiles", {})["h3nx-arclight"] = {
+    "name": "H3N-X (Arclight)",
+    "type": "custom",
+    "lastVersionId": version,
+    "gameDir": game_dir,
+    "javaArgs": "-Xmx6G -Xms2G",
+}
+with open(path, "w") as f:
+    json.dump(data, f, indent=2)
+PYEOF
+ok "Perfil 'H3N-X (Arclight)' creado/actualizado."
 
 echo
-if [[ -z "$HAS_FABRIC" ]]; then
-    echo "=== Copiado ✔ pero FALTA UN PASO IMPORTANTE ==="
-    echo "No se pudo instalar Fabric Loader 1.21.11 automaticamente."
-    echo "Los mods NO van a hacer nada hasta que lo instales vos:"
-    echo "  1. Entra a https://fabricmc.net/use/installer/"
-    echo "  2. Descarga el instalador, elegi Minecraft version 1.21.11"
-    echo "  3. Instalalo, abri el launcher de Minecraft y elegi el nuevo perfil"
-    echo "     'fabric-loader-1.21.11' antes de jugar."
-else
-    echo "=== Listo ✔ ==="
-    echo "Fabric 1.21.11 esta instalado. Elegi el perfil 'fabric-loader-1.21.11'"
-    echo "en el launcher de Minecraft y jugá."
-fi
-echo "Adentro del juego: Mod Menu -> FancyMenu, para asignar las imagenes"
-echo "de menu (ya estan en config/fancymenu/assets/)."
-echo "Al conectarte al server necesitas estar en la whitelist, y la primera"
-echo "vez registrarte con: /register <contraseña> <contraseña>"
+echo -e "\033[32m========================================================\033[0m"
+echo -e "\033[32m Listo! Abri el Minecraft Launcher, elegi el perfil\033[0m"
+echo -e "\033[32m 'H3N-X (Arclight)' y dale Play.\033[0m"
+echo
+echo -e "\033[32m Direccion del servidor: ${SERVER_ADDRESS}\033[0m"
+echo -e "\033[32m========================================================\033[0m"
