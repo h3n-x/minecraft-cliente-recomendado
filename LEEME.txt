@@ -28,7 +28,7 @@ INSTALACION MANUAL
    shaderpacks/, resourcepacks/) DENTRO de esa carpeta .minecraft.
 3. Abri el launcher, elegi el perfil "fabric-loader-1.21.11" y jugá.
 
-MODS INCLUIDOS (61)
+MODS INCLUIDOS (60)
 ----------------------
 Rendimiento: Sodium, Lithium, FerriteCore, Entity Culling, ImmediatelyFast,
              ScalableLux, Kle's Render Layer Optimizer, Entity View Distance,
@@ -40,7 +40,7 @@ Visuales: EMF, ETF, Chat Heads, Chat Animation, Visuality, Subtle Effects,
           Sodium Extra Information, Shulker Box Tooltip, Fast Item Frames,
           Smart Particles, Borderless Fullscreen, Map In Slot,
           Perspective Nametag
-Utilidad: Bobby, JourneyMap, Jade, Hold My Items, Inventory Particles,
+Utilidad: Bobby, JourneyMap, Jade, Inventory Particles,
           Chat Signing Hider, GUI Scale Splitter, Perception
 Voz/Social: Simple Voice Chat (el servidor ya lo tiene instalado)
 Branding: FancyMenu + Drippy Loading Screen (con todo el layout de H3N-X
@@ -79,6 +79,15 @@ NOTA - mods que NO se incluyeron y por que
   No hay forma de tener shaders funcionando en este momento sin romper
   el resto del pack. Se puede volver a sumar el dia que Iris saque una
   build compatible.
+- Hold My Items: mostraba las manos en primera persona, pero en las
+  unicas builds que existen para 1.21.11 (5.1 y 5.1.1) el brazo casi no
+  se mueve al atacar o minar en primera persona (en tercera persona se
+  ve bien). Se probo con sus dependencias completas (Respackopts +
+  LibJF) y con distintas combinaciones de mods, y el bug persiste con
+  el mod solo -- es un problema de esa build, no de conflicto con el
+  resto del pack. Se puede volver a sumar si sacan una build que lo
+  arregle.
+- Better Third Person: no tiene ninguna build publicada para 1.21.11.
 
 NOTA SOBRE GAMMA UTILS (vision nocturna)
 -------------------------------------------
