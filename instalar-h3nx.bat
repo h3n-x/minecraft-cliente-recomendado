@@ -91,11 +91,25 @@ if not exist "%MC_DIR%\launcher_profiles.json" (
     pause
     exit /b 1
 )
-powershell -NoProfile -ExecutionPolicy Bypass -Command ^
-    "$p = Get-Content '%MC_DIR%\launcher_profiles.json' -Raw | ConvertFrom-Json; ^
-     $prof = [PSCustomObject]@{ name='H3N-X (Arclight)'; type='custom'; lastVersionId='%FORGE_VERSION%'; gameDir='%GAME_DIR%'; javaArgs='-Xmx6G -Xms2G' }; ^
-     $p.profiles | Add-Member -NotePropertyName 'h3nx-arclight' -NotePropertyValue $prof -Force; ^
-     $p | ConvertTo-Json -Depth 20 | Set-Content -Path '%MC_DIR%\launcher_profiles.json' -Encoding UTF8"
+rem El "^" de continuacion de linea de CMD no es confiable dentro de un
+rem bloque -Command entre comillas (rompe el parseo con pipes/parentesis
+rem anidados). En vez de eso se manda el script ya en base64 UTF-16LE via
+rem -EncodedCommand, que no depende de ningun escapeo de CMD. El script
+rem en claro (antes de codificar) es:
+rem   $McDir = Join-Path $env:APPDATA '.minecraft'
+rem   $GameDir = Join-Path $env:APPDATA '.minecraft-arclight-h3nx'
+rem   $Version = '1.20.1-47.4.10'
+rem   $profilesPath = Join-Path $McDir 'launcher_profiles.json'
+rem   $p = Get-Content $profilesPath -Raw ^| ConvertFrom-Json
+rem   $prof = [PSCustomObject]@{ name = 'H3N-X (Arclight)'; type = 'custom'; lastVersionId = $Version; gameDir = $GameDir; javaArgs = '-Xmx6G -Xms2G' }
+rem   $p.profiles ^| Add-Member -NotePropertyName 'h3nx-arclight' -NotePropertyValue $prof -Force
+rem   $p ^| ConvertTo-Json -Depth 20 ^| Set-Content -Path $profilesPath -Encoding UTF8
+powershell -NoProfile -ExecutionPolicy Bypass -EncodedCommand JABNAGMARABpAHIAIAA9ACAASgBvAGkAbgAtAFAAYQB0AGgAIAAkAGUAbgB2ADoAQQBQAFAARABBAFQAQQAgACcALgBtAGkAbgBlAGMAcgBhAGYAdAAnAAoAJABHAGEAbQBlAEQAaQByACAAPQAgAEoAbwBpAG4ALQBQAGEAdABoACAAJABlAG4AdgA6AEEAUABQAEQAQQBUAEEAIAAnAC4AbQBpAG4AZQBjAHIAYQBmAHQALQBhAHIAYwBsAGkAZwBoAHQALQBoADMAbgB4ACcACgAkAFYAZQByAHMAaQBvAG4AIAA9ACAAJwAxAC4AMgAwAC4AMQAtADQANwAuADQALgAxADAAJwAKACQAcAByAG8AZgBpAGwAZQBzAFAAYQB0AGgAIAA9ACAASgBvAGkAbgAtAFAAYQB0AGgAIAAkAE0AYwBEAGkAcgAgACcAbABhAHUAbgBjAGgAZQByAF8AcAByAG8AZgBpAGwAZQBzAC4AagBzAG8AbgAnAAoAJABwACAAPQAgAEcAZQB0AC0AQwBvAG4AdABlAG4AdAAgACQAcAByAG8AZgBpAGwAZQBzAFAAYQB0AGgAIAAtAFIAYQB3ACAAfAAgAEMAbwBuAHYAZQByAHQARgByAG8AbQAtAEoAcwBvAG4ACgAkAHAAcgBvAGYAIAA9ACAAWwBQAFMAQwB1AHMAdABvAG0ATwBiAGoAZQBjAHQAXQBAAHsAIABuAGEAbQBlACAAPQAgACcASAAzAE4ALQBYACAAKABBAHIAYwBsAGkAZwBoAHQAKQAnADsAIAB0AHkAcABlACAAPQAgACcAYwB1AHMAdABvAG0AJwA7ACAAbABhAHMAdABWAGUAcgBzAGkAbwBuAEkAZAAgAD0AIAAkAFYAZQByAHMAaQBvAG4AOwAgAGcAYQBtAGUARABpAHIAIAA9ACAAJABHAGEAbQBlAEQAaQByADsAIABqAGEAdgBhAEEAcgBnAHMAIAA9ACAAJwAtAFgAbQB4ADYARwAgAC0AWABtAHMAMgBHACcAIAB9AAoAJABwAC4AcAByAG8AZgBpAGwAZQBzACAAfAAgAEEAZABkAC0ATQBlAG0AYgBlAHIAIAAtAE4AbwB0AGUAUAByAG8AcABlAHIAdAB5AE4AYQBtAGUAIAAnAGgAMwBuAHgALQBhAHIAYwBsAGkAZwBoAHQAJwAgAC0ATgBvAHQAZQBQAHIAbwBwAGUAcgB0AHkAVgBhAGwAdQBlACAAJABwAHIAbwBmACAALQBGAG8AcgBjAGUACgAkAHAAIAB8ACAAQwBvAG4AdgBlAHIAdABUAG8ALQBKAHMAbwBuACAALQBEAGUAcAB0AGgAIAAyADAAIAB8ACAAUwBlAHQALQBDAG8AbgB0AGUAbgB0ACAALQBQAGEAdABoACAAJABwAHIAbwBmAGkAbABlAHMAUABhAHQAaAAgAC0ARQBuAGMAbwBkAGkAbgBnACAAVQBUAEYAOAAKAA==
+if errorlevel 1 (
+    echo No se pudo registrar el perfil automaticamente. Podes crearlo a
+    echo mano en el launcher: version "%FORGE_VERSION%", Game Directory
+    echo "%GAME_DIR%".
+)
 
 echo.
 echo === Listo ===
