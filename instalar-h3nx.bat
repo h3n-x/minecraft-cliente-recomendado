@@ -26,6 +26,9 @@ if errorlevel 1 (
 if not exist "%MC_DIR%\versions\%FORGE_VERSION%" (
     echo Forge %FORGE_VERSION% no esta instalado -- instalandolo automaticamente...
     if not exist "%MC_DIR%" mkdir "%MC_DIR%"
+    if not exist "%MC_DIR%\launcher_profiles.json" (
+        echo {"profiles":{},"settings":{},"version":3} > "%MC_DIR%\launcher_profiles.json"
+    )
     set "TMP=%TEMP%\h3nx_install_%RANDOM%"
     mkdir "!TMP!"
     powershell -NoProfile -ExecutionPolicy Bypass -Command "try { Invoke-WebRequest -Uri 'https://maven.minecraftforge.net/net/minecraftforge/forge/%FORGE_VERSION%/forge-%FORGE_VERSION%-installer.jar' -OutFile '!TMP!\forge-installer.jar' -UseBasicParsing } catch { exit 1 }"

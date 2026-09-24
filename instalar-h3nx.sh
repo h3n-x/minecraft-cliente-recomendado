@@ -46,6 +46,12 @@ else
         "https://maven.minecraftforge.net/net/minecraftforge/forge/${FORGE_VERSION}/forge-${FORGE_VERSION}-installer.jar"
     ok "Instalador descargado, ejecutando instalacion headless (puede tardar un minuto)..."
     mkdir -p "$MC_DIR"
+    # El instalador de Forge se niega a instalar si el destino no tiene ya
+    # un launcher_profiles.json (asume que el launcher oficial corrio ahi
+    # al menos una vez). Si no existe, se crea uno minimo valido.
+    if [[ ! -f "${MC_DIR}/launcher_profiles.json" ]]; then
+        echo '{"profiles":{},"settings":{},"version":3}' > "${MC_DIR}/launcher_profiles.json"
+    fi
     # El instalador de Forge necesita que le digamos la carpeta destino de
     # forma explicita -- sin eso, "--installClient" a secas instala en el
     # directorio actual (que puede no ser escribible) en vez de en
