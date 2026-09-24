@@ -135,3 +135,6 @@ AVISOS DE COMPATIBILIDAD
   en cuentas no premium), FancyMenu puede mostrar una advertencia de
   "instalacion modificada" -- es una deteccion del propio FancyMenu
   contra ese tipo de launchers, no significa que el pack este roto.
+  TLauncher en particular usa la MISMA carpeta .minecraft que el
+  launcher oficial (Windows: %appdata%\.minecraft, Linux: ~/.minecraft),
+  asi que el instalador automatico funciona igual sin pasos extra.

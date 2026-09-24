@@ -7,7 +7,17 @@
 set -euo pipefail
 
 PACK_URL="https://raw.githubusercontent.com/h3n-x/minecraft-cliente-recomendado/main/H3NX-Cliente-Recomendado.zip"
-DEST="${1:-$HOME/.minecraft}"
+
+# Default segun sistema operativo -- en Mac el launcher oficial NO usa
+# ~/.minecraft (esa es la ruta de Linux), usa Application Support.
+if [[ -z "${1:-}" ]]; then
+    case "$(uname -s)" in
+        Darwin) DEST="$HOME/Library/Application Support/minecraft" ;;
+        *)      DEST="$HOME/.minecraft" ;;
+    esac
+else
+    DEST="$1"
+fi
 
 echo "=== Instalador del cliente recomendado H3N-X ==="
 echo "Destino: $DEST"
