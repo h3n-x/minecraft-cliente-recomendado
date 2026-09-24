@@ -25,6 +25,7 @@ if errorlevel 1 (
 
 if not exist "%MC_DIR%\versions\%FORGE_VERSION%" (
     echo Forge %FORGE_VERSION% no esta instalado -- instalandolo automaticamente...
+    if not exist "%MC_DIR%" mkdir "%MC_DIR%"
     set "TMP=%TEMP%\h3nx_install_%RANDOM%"
     mkdir "!TMP!"
     powershell -NoProfile -ExecutionPolicy Bypass -Command "try { Invoke-WebRequest -Uri 'https://maven.minecraftforge.net/net/minecraftforge/forge/%FORGE_VERSION%/forge-%FORGE_VERSION%-installer.jar' -OutFile '!TMP!\forge-installer.jar' -UseBasicParsing } catch { exit 1 }"
@@ -34,8 +35,11 @@ if not exist "%MC_DIR%\versions\%FORGE_VERSION%" (
         exit /b 1
     )
     echo Ejecutando instalacion headless de Forge ^(puede tardar un minuto^)...
-    java -jar "!TMP!\forge-installer.jar" --installClient
-    if errorlevel 1 (
+    pushd "!TMP!"
+    java -jar "forge-installer.jar" --installClient "%MC_DIR%"
+    set "FORGE_RC=!errorlevel!"
+    popd
+    if !FORGE_RC! neq 0 (
         echo El instalador de Forge fallo. Instalalo manualmente desde:
         echo https://files.minecraftforge.net/net/minecraftforge/forge/index_1.20.1.html
         pause

@@ -40,12 +40,18 @@ if [[ -d "${MC_DIR}/versions/${FORGE_VERSION}" ]]; then
     step "Forge ${FORGE_VERSION} ya esta instalado, se omite este paso."
 else
     step "Forge ${FORGE_VERSION} no encontrado. Descargando e instalando automaticamente..."
-    installer="$(mktemp --suffix=.jar)"
+    installer_dir="$(mktemp -d)"
+    installer="${installer_dir}/forge-installer.jar"
     curl -fSL -o "$installer" \
         "https://maven.minecraftforge.net/net/minecraftforge/forge/${FORGE_VERSION}/forge-${FORGE_VERSION}-installer.jar"
     ok "Instalador descargado, ejecutando instalacion headless (puede tardar un minuto)..."
-    java -jar "$installer" --installClient
-    rm -f "$installer"
+    mkdir -p "$MC_DIR"
+    # El instalador de Forge necesita que le digamos la carpeta destino de
+    # forma explicita -- sin eso, "--installClient" a secas instala en el
+    # directorio actual (que puede no ser escribible) en vez de en
+    # $MC_DIR, y falla.
+    (cd "$installer_dir" && java -jar "forge-installer.jar" --installClient "$MC_DIR")
+    rm -rf "$installer_dir"
     ok "Forge ${FORGE_VERSION} instalado."
 fi
 
